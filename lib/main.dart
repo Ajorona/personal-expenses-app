@@ -3,10 +3,11 @@ import 'package:uuid/uuid.dart';
 
 import './constants/transaction.dart';
 
+import './utils/Intl.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,7 +49,6 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               width: double.infinity,
@@ -57,9 +57,44 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-            Text(
-              'Hello World',
+            Card(
+              child: Column(
+                children: <Widget>[TextField()],
+              ),
             ),
+            Column(
+              children: transactions.map((transaction) {
+                return Card(
+                    child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: 120,
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      child: Text(
+                        'R\$ ${transaction.amount}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(transaction.title,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(
+                          formatDate(transaction.createdAt),
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    )
+                  ],
+                ));
+              }).toList(),
+            )
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
