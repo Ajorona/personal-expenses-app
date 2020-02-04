@@ -59,7 +59,15 @@ class MyHomePage extends StatelessWidget {
             ),
             Card(
               child: Column(
-                children: <Widget>[TextField()],
+                children: <Widget>[
+                  TextField(decoration: InputDecoration(labelText: 'Title')),
+                  TextField(decoration: InputDecoration(labelText: 'Amount')),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text('Add Transaction'),
+                    textColor: Colors.black,
+                  )
+                ],
               ),
             ),
             Column(
