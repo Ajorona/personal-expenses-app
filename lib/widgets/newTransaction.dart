@@ -7,7 +7,7 @@ class NewTransaction extends StatelessWidget {
 
   NewTransaction(this.addNewTransaction);
 
-  void submitTransaction() {
+  void submitTransaction(BuildContext context) {
     final inputTitle = titleController.text;
     final inputAmount = double.parse(amountController.text);
 
@@ -19,6 +19,9 @@ class NewTransaction extends StatelessWidget {
       inputTitle,
       inputAmount,
     );
+
+    // dismiss the BottomSheet modal
+    Navigator.of(context).pop();
   }
 
   @override
@@ -33,16 +36,16 @@ class NewTransaction extends StatelessWidget {
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
               keyboardType: TextInputType.text,
-              onSubmitted: (_) => submitTransaction(),
+              onSubmitted: (_) => submitTransaction(context),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => submitTransaction(),
+              onSubmitted: (_) => submitTransaction(context),
             ),
             FlatButton(
-              onPressed: submitTransaction,
+              onPressed: () => submitTransaction(context),
               child: Text('Add Transaction'),
               textColor: Colors.black,
             )
