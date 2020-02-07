@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
-import './widgets/userTransactions.dart';
+import './models/transaction.dart';
+
+import './widgets/transactionList.dart';
+import './widgets/newTransaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +18,55 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  static final uuid = new Uuid();
+  static final List<Transaction> _userTransactions = [
+    Transaction(
+        id: uuid.v1(),
+        title: 'Shoes',
+        amount: 59.99,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now()),
+    Transaction(
+        id: uuid.v1(),
+        title: 'Groceries',
+        amount: 102.99,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now()),
+    Transaction(
+        id: uuid.v1(),
+        title: 'Light Bill',
+        amount: 1.99,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now()),
+  ];
+
+  void _addNewTransaction(String newTitle, double newAmount) {
+    final newTransaction = Transaction(
+        title: newTitle,
+        amount: newAmount,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        id: uuid.v1());
+
+    setState(() {
+      _userTransactions.add(newTransaction);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return NewTransaction(_addNewTransaction);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,7 +83,7 @@ class MyHomePage extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () => _startAddNewTransaction(context),
             ),
           ],
         ),
@@ -46,14 +98,14 @@ class MyHomePage extends StatelessWidget {
                   elevation: 5,
                 ),
               ),
-              UserTransactions(),
+              TransactionList(_userTransactions),
             ],
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () => _startAddNewTransaction(context),
         ),
       ),
     ); // This trailing comma makes auto-formatting nicer for build methods.
