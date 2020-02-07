@@ -5,6 +5,7 @@ import './models/transaction.dart';
 
 import './widgets/transactionList.dart';
 import './widgets/newTransaction.dart';
+import './utils/theme.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Personal Expenses',
+      theme: ThemeData(primarySwatch: defaultTheme),
       home: MyHomePage(),
     );
   }
@@ -79,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter App'),
+          title: Text('Personal Expenses'),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
