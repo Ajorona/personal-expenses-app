@@ -26,31 +26,28 @@ class NewTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: titleController,
-              keyboardType: TextInputType.text,
-              onSubmitted: (_) => submitTransaction(context),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: amountController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => submitTransaction(context),
-            ),
-            FlatButton(
-              onPressed: () => submitTransaction(context),
-              child: Text('Add Transaction'),
-              textColor: Colors.black,
-            )
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(labelText: 'Title'),
+            controller: titleController,
+            keyboardType: TextInputType.text,
+            onSubmitted: (_) => submitTransaction(context),
+          ),
+          TextField(
+            decoration: InputDecoration(labelText: 'Amount'),
+            controller: amountController,
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            onSubmitted: (_) => submitTransaction(context),
+          ),
+          FlatButton(
+            onPressed: () => submitTransaction(context),
+            child: Text('Add Transaction'),
+            textColor: Colors.black,
+          )
+        ],
       ),
     );
   }
