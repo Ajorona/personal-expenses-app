@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import './models/transaction.dart';
 
+import './widgets/chart.dart';
 import './widgets/transactionList.dart';
 import './widgets/newTransaction.dart';
 import './utils/theme.dart';
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //     id: uuid.v1(),
     //     title: 'Shoes',
     //     amount: 59.99,
-    //     createdAt: DateTime.now(),
+    //     createdAt: DateTime.now().subtract(Duration(days: 20)),
     //     updatedAt: DateTime.now()),
     // Transaction(
     //     id: uuid.v1(),
@@ -50,6 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
     //     createdAt: DateTime.now(),
     //     updatedAt: DateTime.now()),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((transaction) {
+      return transaction.createdAt.isAfter(
+          DateTime.now().subtract(Duration(days: DateTime.daysPerWeek)));
+    }).toList();
+  }
 
   void _addNewTransaction(String newTitle, double newAmount) {
     final newTransaction = Transaction(
@@ -96,13 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                width: double.infinity,
-                child: Card(
-                  child: Text('Card'),
-                  elevation: 5,
-                ),
-              ),
+              Chart(_recentTransactions),
               TransactionList(_userTransactions),
             ],
           ),
