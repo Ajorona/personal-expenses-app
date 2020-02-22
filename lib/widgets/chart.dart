@@ -10,11 +10,9 @@ class Chart extends StatelessWidget {
     return List.generate(DateTime.daysPerWeek, (index) {
       // gets the weekday using the List index as a key
       final weekDay = DateTime.now().subtract(Duration(days: index));
-      var lastTransactions = 0.00;
-
-      recentTransactions.forEach((item) {
+      var lastTransactions = recentTransactions.fold(0.0, (sum, item) {
         if (item.createdAt.day == weekDay.day) {
-          lastTransactions += item.amount;
+          return sum + item.amount;
         }
       });
 
@@ -27,7 +25,13 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
-    return Container();
+    return Card(
+        elevation: 6,
+        margin: EdgeInsets.all(20),
+        child: Row(
+          children: groupedTransactionValues.map((data) {
+            return Text('${data['day']} : ${data['amount']}');
+          }).toList(),
+        ));
   }
 }
